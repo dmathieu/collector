@@ -28,28 +28,20 @@ Here's the small method I'm using:
 
 ```
 window.collector = {
-  host: host,
+  host: 'http://<app_name>.herokuapp,com/',
   collect: function(kind, key, value) {
     var host;
-    host = 'http://<app_name>.herokuapp,com/';
-    return new Ember.RSVP.Promise(function(resolve, reject) {
-      return jQuery.ajax({
-        url: "" + host + "/collect",
-        method: "POST",
-        data: {
-          metric: {
-            key: key,
-            value: value,
-            kind: kind
-          }
-        },
-        success: function(r) {
-          return resolve(r);
-        },
-        error: function(r) {
-          return reject(r);
+    host = this.host;
+    return jQuery.ajax({
+      url: "" + host + "/collect",
+      method: "POST",
+      data: {
+        metric: {
+          key: key,
+          value: value,
+          kind: kind
         }
-      });
+      }
     });
   }
 };
